@@ -2,7 +2,7 @@
 
 > A beautiful 3D portfolio website to showcase your amazing work!
 
-<div align="center">
+---
   <img src="public/logo.png" alt="Logo" width="80" />
   <br />
   
