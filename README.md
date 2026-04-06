@@ -40,18 +40,22 @@
 ## 🚀 Quick Start
 
 ### 1. Clone
+
 ```bash
 git clone https://github.com/imeerai/hero.git
 cd hero
 ```
 
 ### 2. Install
+
 ```bash
 npm install
 ```
 
 ### 3. Setup Emails (Optional)
+
 Create `.env` file:
+
 ```env
 VITE_EMAILJS_SERVICE_ID=your_service_id
 VITE_EMAILJS_TEMPLATE_ID=your_template_id
@@ -59,6 +63,7 @@ VITE_EMAILJS_PUBLIC_KEY=your_public_key
 ```
 
 ### 4. Run
+
 ```bash
 npm run dev
 ```
@@ -87,6 +92,7 @@ hero/
 ## 🎯 Customize
 
 Edit `src/data/portfolio-data.js` to add your:
+
 - Projects
 - Skills
 - Experience
