@@ -4,10 +4,11 @@
   "version": "1.0.0",
   "description": "A modern, interactive 3D developer portfolio built with React, Three.js, and Tailwind CSS.",
   "author": "Imeer's Portfolio <imeer.ai>",
+  "homepage": "https://name.com",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/imeer-ai/portfolio"
+    "url": "https://github.com/imeerai/hero"
   },
   "type": "module",
   "scripts": {
