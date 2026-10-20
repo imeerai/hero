@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/app/intertight_38f0f8ef.module.css"],"sourcesContent":["@font-face {\n    \nfont-family: 'interTight';\n    src: url('@vercel/turbopack-next/internal/font/local/font?{%22path%22:%22./fonts/InterTight.woff2%22,%22preload%22:true,%22has_size_adjust%22:true}') format('woff2');\n    font-display: swap;\n    \nfont-weight: 100 900;\n}\n\n@font-face {\n    font-family: 'interTight Fallback';\n    src: local(\"Arial\");\n    ascent-override: 99.65%;\ndescent-override: 24.81%;\nline-gap-override: 0.00%;\nsize-adjust: 97.21%;\n\n}\n\n.className {\n    font-family: 'interTight', 'interTight Fallback';\n    \n}\n.variable {\n    --font-inter-tight: 'interTight', 'interTight Fallback';\n}\n\n"],"names":[],"mappings":"AAAA;;;;;;;AASA;;;;;;;;;AAUA;;;;AAIA"}}]
+}

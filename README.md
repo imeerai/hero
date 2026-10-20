@@ -1,130 +1,57 @@
-# 🎨 Imeer.ai - 3D Developer Portfolio
+# imeer.dev - Zameer Abbas portfolio
 
-> A beautiful 3D portfolio website to showcase your amazing work!
+Next.js 16 (App Router) + Tailwind CSS 4. Dark "Option 2" design: lime / off-white on ink, coral accent.
 
----
-  <img src="public/logo.png" alt="Logo" width="80" />
-  <br />
-  
-  ![React](https://img.shields.io/badge/-React-61DAFB?style=flat-square&logo=react&logoColor=black)
-  ![Three.js](https://img.shields.io/badge/-Three.js-white?style=flat-square&logo=three.js)
-  ![Tailwind](https://img.shields.io/badge/-Tailwind-06B6D4?style=flat-square&logo=tailwindcss)
-  ![Vite](https://img.shields.io/badge/-Vite-646CFF?style=flat-square&logo=vite)
-</div>
-
----
-
-## ✨ Features
-
-- 🎯 **3D Hero Section** - Amazing 3D background
-- 📱 **Fully Responsive** - Works on all devices
-- 🎬 **Smooth Animations** - Beautiful transitions
-- 🌟 **3D Elements** - Stars, Earth, and cool effects
-- 📧 **Contact Form** - Send emails directly
-- 🚀 **Projects Showcase** - Display your work
-- 🎓 **Experience Timeline** - Show your journey
-
----
-
-## 🛠️ Tech Stack
-
-- **React.js** - UI
-- **Three.js** - 3D graphics
-- **Framer Motion** - Animations
-- **Tailwind CSS** - Styling
-- **Vite** - Build tool
-- **EmailJS** - Email handling
-
----
-
-## 🚀 Quick Start
-
-### 1. Clone
-
-```bash
-git clone https://github.com/imeerai/hero.git
-cd hero
-```
-
-### 2. Install
+## Run
 
 ```bash
 npm install
+npm run dev        # http://localhost:3000
+npm run build && npm start
 ```
 
-### 3. Setup Emails (Optional)
-
-Create `.env` file:
-
-```env
-VITE_EMAILJS_SERVICE_ID=your_service_id
-VITE_EMAILJS_TEMPLATE_ID=your_template_id
-VITE_EMAILJS_PUBLIC_KEY=your_public_key
-```
-
-### 4. Run
+Create a local environment file before running the app:
 
 ```bash
-npm run dev
+cp .env.example .env.local
 ```
 
-Open [http://localhost:5173](http://localhost:5173) 🎉
+`CONTACT_EMAIL` is set to `abbaszameer234@gmail.com`. The first message sent through the form triggers a one-time FormSubmit activation email to that inbox; click the link once.
 
----
+## Deploy (Vercel)
 
-## 📁 Folder Structure
+1. Import the repository in Vercel with framework preset `Next.js`.
+2. Add `CONTACT_EMAIL=abbaszameer234@gmail.com` under Environment Variables for Production, Preview, and Development.
+3. Deploy the project.
+4. Open Project Settings → Domains, add `imeer.dev`, then follow Vercel's DNS instructions.
 
-```
-hero/
-├── src/
-│   ├── components/       # React components
-│   │   ├── sections/     # Hero, Projects, Contact
-│   │   ├── canvas/       # 3D components
-│   │   └── ui/          # UI components
-│   ├── data/            # Your portfolio data
-│   └── assets/          # Images & icons
-├── public/              # Static files
-└── package.json
-```
+The canonical site URL, Open Graph metadata, and sitemap already use `https://imeer.dev`.
 
----
+## Where things are
 
-## 🎯 Customize
+| What                                           | Where                           |
+| ---------------------------------------------- | ------------------------------- |
+| All copy, links, projects, FAQ                 | `lib/content.ts`                |
+| Colours, fonts, breakpoint (`d:` = ≥821px)     | `app/globals.css` `@theme`      |
+| Load / scroll / hover motion                   | `app/globals.css`               |
+| Sections                                       | `components/*.tsx`              |
+| CV file                                        | `public/cv/Zameer-Abbas-CV.pdf` |
+| Project screenshots                            | `public/images/projects/*.webp` |
+| Contact API (validation, honeypot, rate limit) | `app/api/contact/route.ts`      |
+| Security headers                               | `next.config.ts`                |
+| Per-request CSP nonce                          | `proxy.ts`                      |
 
-Edit `src/data/portfolio-data.js` to add your:
+## Security
 
-- Projects
-- Skills
-- Experience
-- Education
+- Strict CSP: scripts only with a per-request nonce (`'strict-dynamic'`), no third-party origins, `frame-ancestors 'none'`, `object-src 'none'`, `form-action 'self'`.
+- HSTS (preload), `nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy`, `Permissions-Policy`, COOP/CORP, no `X-Powered-By`.
+- Contact API: same-origin check, JSON only, 10 KB body cap, field validation, honeypot, 5 messages / 10 min per IP, 8 s upstream timeout, generic error messages.
+- Fonts and images are self-hosted (no runtime calls to Google).
+- Volumetric DDoS protection comes from Vercel's edge firewall; turn on "Attack Challenge Mode" in the Vercel dashboard if you ever get flooded. The in-memory rate limit is per instance — swap to Upstash/Vercel KV if the form gets abused.
 
----
+## Motion
 
-## 📦 Commands
-
-```bash
-npm run dev      # Development
-npm run build    # Production build
-npm run preview  # Preview build
-npm run lint     # Check code
-```
-
----
-
-## 🔗 Links
-
-- 📍 [Live Demo](https://imeer.ai)
-- 💻 [GitHub](https://github.com/imeerai/hero)
-- 📧 [Contact](https://imeer.ai#contact)
-
----
-
-## 📄 License
-
-MIT License - feel free to use!
-
----
-
-<div align="center">
-  Made with ❤️ by Imeer
-</div>
+- Load: staggered rise, SECURE scramble every 7 s, rotating header ticker, floating sparkle, rotating rings, cursor spotlight on the grid.
+- Tapes: two crossed marquees moving in opposite directions.
+- Scroll: native CSS scroll-driven animations (`animation-timeline: view()`) — Chrome/Edge animate, other browsers show content without the effect. Scroll progress bar on top.
+- `prefers-reduced-motion` turns all of it off.

@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+/* Design tokens (Option 2). Mobile-first: `d:` = desktop (>= 821px), matching the design's 820px breakpoint. */
+@theme {
+  --breakpoint-d: 821px;
+  --color-ink: #0e0e0e;
+  --color-bone: #f2f0e9;
+  --color-lime: #d4ff3a;
+  --color-coral: #ff6a3d;
+  --color-card: #161616;
+  --color-card2: #1c1c1b;
+  --color-line: #2c2c2a;
+  --color-line2: #262626;
+  --color-edge: #3a3a37;
+  --color-muted: #8f8d85;
+  --color-soft: #a8a69e;
+  --color-chip: #c9c7bf;
+  --font-sans: var(--font-inter-tight), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+}
+
+html { scroll-behavior: smooth; scrollbar-width: none; overflow-x: clip; }
+html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
+section[id] { scroll-margin-top: 90px; }
+body { margin: 0; background: var(--color-ink); color: var(--color-bone); overflow-x: clip; }
+@layer base {
+  a { color: var(--color-bone); }
+  a:hover { color: var(--color-lime); }
+}
+::selection { background: var(--color-lime); color: var(--color-ink); }
+:focus-visible { outline: 2px solid var(--color-lime); outline-offset: 3px; }
+
+/* ---------- hero / load motion ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(28px) } to { opacity: 1; transform: none } }
+.rise { animation: rise .9s cubic-bezier(.2,.8,.2,1) both }
+.d1 { animation-delay: .08s } .d2 { animation-delay: .18s } .d3 { animation-delay: .28s }
+
+@keyframes floaty { 0%,100% { transform: translateY(0) rotate(var(--r)) } 50% { transform: translateY(-12px) rotate(var(--r)) } }
+.floaty { animation: floaty 5s ease-in-out infinite }
+
+@keyframes ticker { 0%,18% { transform: translateY(0) } 25%,43% { transform: translateY(-14px) } 50%,68% { transform: translateY(-28px) } 75%,93% { transform: translateY(-42px) } 100% { transform: translateY(-56px) } }
+.ticker { animation: ticker 8s cubic-bezier(.7,0,.3,1) infinite }
+
+@keyframes pulse { 0%,100% { opacity: 1; transform: scale(1) } 50% { opacity: .35; transform: scale(.7) } }
+.pulse { animation: pulse 1.6s ease-in-out infinite }
+
+@keyframes gridmove { to { background-position: 64px 64px } }
+.hero-grid {
+  background-image: linear-gradient(rgba(242,240,233,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(242,240,233,.06) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse at 50% 45%, #000 30%, transparent 72%);
+  animation: gridmove 18s linear infinite;
+}
+/* cursor spotlight; --mx/--my are set from JS */
+.hero-spot {
+  --mx: -999px; --my: -999px;
+  background-image: linear-gradient(rgba(212,255,58,.45) 1px, transparent 1px), linear-gradient(90deg, rgba(212,255,58,.45) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(240px circle at var(--mx) var(--my), #000, transparent 75%);
+  animation: gridmove 18s linear infinite;
+}
+
+@keyframes turn { to { transform: rotate(360deg) } }
+.ring { animation: turn 60s linear infinite }
+.ring.rev { animation-duration: 90s; animation-direction: reverse }
+
+@keyframes marquee { to { transform: translateX(-50%) } }
+.marquee { display: flex; width: max-content; animation: marquee 50s linear infinite }
+.marquee.rev { animation-duration: 60s; animation-direction: reverse }
+
+.lift { transition: transform .35s cubic-bezier(.2,.8,.2,1), border-color .35s }
+.lift:hover { transform: translateY(-6px); border-color: var(--color-lime) }
+.cta-a { transition: transform .2s } .cta-a:hover { transform: translateY(-2px) }
+
+/* ---------- scroll motion: native scroll-driven animations; unsupported browsers just show content ---------- */
+.sprog { position: fixed; inset: 0 0 auto 0; height: 3px; background: linear-gradient(90deg, var(--color-lime), var(--color-coral)); transform-origin: 0 50%; scale: 0 1; z-index: 50; pointer-events: none }
+@supports (animation-timeline: view()) {
+  @keyframes up { from { opacity: 0; translate: 0 70px } to { opacity: 1; translate: 0 0 } }
+  @keyframes inR { from { opacity: 0; translate: 120px 0 } to { opacity: 1; translate: 0 0 } }
+  @keyframes inL { from { opacity: 0; translate: -120px 0 } to { opacity: 1; translate: 0 0 } }
+  @keyframes pop { from { opacity: 0; scale: .86; translate: 0 80px } to { opacity: 1; scale: 1; translate: 0 0 } }
+  @keyframes zoomOut { from { scale: 1.25 } to { scale: 1 } }
+  @keyframes tilt { from { opacity: 0; rotate: -8deg; translate: 0 90px } to { opacity: 1; rotate: 0deg; translate: 0 0 } }
+  @keyframes wipe { from { opacity: .25; filter: blur(6px); translate: 0 40px } to { opacity: 1; filter: blur(0); translate: 0 0 } }
+  @keyframes spread { from { letter-spacing: 40px; opacity: .2 } to { letter-spacing: -12px; opacity: 1 } }
+  @keyframes spreadM { from { letter-spacing: 10px; opacity: .2 } to { letter-spacing: -4px; opacity: 1 } }
+  @keyframes grow { to { scale: 1 1 } }
+  .sv { animation-timing-function: linear; animation-fill-mode: both; animation-timeline: view(); animation-range: entry 0% cover 30% }
+  .sv-up { animation-name: up }
+  .sv-pop { animation-name: pop; animation-range: entry 0% cover 35% }
+  .sv-tilt { animation-name: tilt }
+  .sv-wipe { animation-name: wipe; animation-range: entry 0% cover 45% }
+  .sv-zoom { animation-name: zoomOut; animation-range: entry 0% exit 0% }
+  /* horizontal slides on desktop only; on phones they clip, so they rise instead */
+  .sv-inL, .sv-inR { animation-name: up }
+  .sv-inL { animation-range: entry 0% cover 35% }
+  .sv-spread { animation-name: spreadM; animation-range: entry 0% entry 100% } /* last element on the page: must finish before max scroll */
+  .sprog { animation: grow linear both; animation-timeline: scroll(root) }
+  @media (min-width: 821px) {
+    .sv-inL { animation-name: inL }
+    .sv-inR { animation-name: inR }
+    .sv-spread { animation-name: spread }
+  }
+}
+
+/* ---------- hero extras ---------- */
+@keyframes roles { 0.00%,4.44% { transform: translateY(-0px) } 5.56%,10.00% { transform: translateY(-16px) } 11.11%,15.56% { transform: translateY(-32px) } 16.67%,21.11% { transform: translateY(-48px) } 22.22%,26.67% { transform: translateY(-64px) } 27.78%,32.22% { transform: translateY(-80px) } 33.33%,37.78% { transform: translateY(-96px) } 38.89%,43.33% { transform: translateY(-112px) } 44.44%,48.89% { transform: translateY(-128px) } 50.00%,54.44% { transform: translateY(-144px) } 55.56%,60.00% { transform: translateY(-160px) } 61.11%,65.56% { transform: translateY(-176px) } 66.67%,71.11% { transform: translateY(-192px) } 72.22%,76.67% { transform: translateY(-208px) } 77.78%,82.22% { transform: translateY(-224px) } 83.33%,87.78% { transform: translateY(-240px) } 88.89%,93.33% { transform: translateY(-256px) } 94.44%,98.89% { transform: translateY(-272px) } 100% { transform: translateY(-288px) } }
+.roles { animation: roles 36s cubic-bezier(.7,0,.3,1) infinite }
+.lt { display: inline-block; cursor: default; transition: transform .35s cubic-bezier(.3,1.6,.5,1), color .25s }
+.lt:hover { transform: translateY(-14px) rotate(-6deg); color: var(--color-lime) }
+.lt.lt2:hover { color: var(--color-coral) }
+@keyframes cue { 0% { transform: translateY(0); opacity: 1 } 70% { transform: translateY(12px); opacity: 0 } 100% { transform: translateY(0); opacity: 0 } }
+.cue-dot { animation: cue 1.8s ease-in-out infinite }
+
+/* Fallback for browsers without scroll-driven animations (Safari/Firefox): ScrollFx adds .in when visible */
+.no-sdt .sv { opacity: 0; translate: 0 50px; transition: opacity .8s cubic-bezier(.2,.8,.2,1), translate .8s cubic-bezier(.2,.8,.2,1) }
+.no-sdt .sv.sv-zoom { opacity: 1; translate: none }
+.no-sdt .sv.in { opacity: 1; translate: 0 0 }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important }
+  .no-sdt .sv { opacity: 1; translate: none }
+}
+
+/* agent A */
+.orbit { animation: turn 60s linear infinite }
+.orbit.rev { animation-duration: 90s; animation-direction: reverse }
+body { line-height: normal } /* design uses the browser default, not Tailwind's 1.5 */
